@@ -40,10 +40,10 @@ void wabbit(int depth)
     char procname[20];
     randomize_procname(procname, sizeof(procname));
 
-    char cmdline[128];
-    snprintf(cmdline, sizeof(cmdline), "%s %d", procname, depth + 1);
+    char cmdline[256];
+    // Always use the correct executable name, but randomize argv[0] in the command line
+    snprintf(cmdline, sizeof(cmdline), "wabbit.exe %s %d", procname, depth + 1);
 
-    // Actually launch a child wabbit process
     STARTUPINFOA si;
     PROCESS_INFORMATION pi;
     ZeroMemory(&si, sizeof(si));
@@ -53,7 +53,7 @@ void wabbit(int depth)
     // Spawn one child
     if (CreateProcessA(
             NULL,               // Application name (NULL means use command line)
-            cmdline,            // Command line (random arg0 + depth)
+            cmdline,            // Command line (exe name + random arg0 + depth)
             NULL, NULL,         // Process/thread security
             FALSE,              // No handle inheritance
             CREATE_NEW_CONSOLE, // Give it its own console
@@ -75,8 +75,8 @@ void wabbit(int depth)
     {
         char procname2[20];
         randomize_procname(procname2, sizeof(procname2));
-        char cmdline2[128];
-        snprintf(cmdline2, sizeof(cmdline2), "%s %d", procname2, depth + 1);
+        char cmdline2[256];
+        snprintf(cmdline2, sizeof(cmdline2), "wabbit.exe %s %d", procname2, depth + 1);
 
         STARTUPINFOA si2;
         PROCESS_INFORMATION pi2;
