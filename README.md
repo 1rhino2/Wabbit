@@ -20,4 +20,4 @@ A Windows port of the classic wabbit/worm. Spawns child processes with random na
 - This is for fun and learning only
 
 ## Final Words
-I hated making this ngl.
+I hated making this readme ngl.
